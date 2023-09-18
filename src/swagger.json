@@ -1,0 +1,561 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Compass Tutor MicroService",
+        "description": "A client hired Compass to build a new microservice for its veterinary franchise. This microservice will be used by all the clinics they own for internal client and attendances management. So, you have this new mission, to build the POC foundations of this brand new microservice, so the sales and management team can have the primary technical view of the needs that the client has.",
+        "contact": {
+            "name": "Grupo 06 - Codeless",
+            "url": "https://github.com/Grupo6-Codeless/PB-nodechallenger03"
+        },
+        "version": "3.0.0"
+    },
+    "tags": [
+        {
+            "name": "Tutor"
+        },
+        {
+            "name": "Pet"
+        }
+    ],
+    "servers": [
+        {
+            "url": "http://localhost:{port}",
+            "variables": {
+                "port": {
+                    "default": "5000"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/auth": {
+            "post": {
+                "tags": [
+                    "Tutor"
+                ],
+                "summary": "Creat Token with Tutor",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthPost"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/tutor": {
+            "post": {
+                "tags": [
+                    "Tutor"
+                ],
+                "summary": "Creat Tutor",
+                "description": "Creat one tutor and return the tutor created",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TutorPost"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/tutors": {
+            "parameters": [
+                {
+                    "name": "page",
+                    "in": "query",
+                    "required": false,
+                    "schema": {
+                        "type": "number",
+                        "example": 1
+                    }
+                },
+                {
+                    "name": "limit",
+                    "in": "query",
+                    "required": false,
+                    "schema": {
+                        "type": "number",
+                        "example": 50
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Tutor"
+                ],
+                "summary": "Get All Tutors",
+                "description": "Get all tutor",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/tutor/{tutorId}": {
+            "parameters": [
+                {
+                    "name": "tutorId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Tutor"
+                ],
+                "summary": "Update all attributes of a tutor",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TutorPut"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Tutor"
+                ],
+                "summary": "Update opcional attributes of a tutor",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TutorPut"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Tutor"
+                ],
+                "summary": "Remove one tutor",
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pet/{tutorId}": {
+            "parameters": [
+                {
+                    "name": "tutorId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "post": {
+                "tags": [
+                    "Pet"
+                ],
+                "summary": "Creat Pet",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetPostAndPut"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pet/{petId}/tutor/{tutorId}": {
+            "parameters": [
+                {
+                    "name": "petId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "tutorId",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Pet"
+                ],
+                "summary": "Update all attributes of a pet",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetPostAndPut"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Pet"
+                ],
+                "summary": "Update opcional attributes of a pet",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetPostAndPut"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Pet"
+                ],
+                "summary": "Remove one tutor",
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/NoContent"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequestError"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundError"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TutorPost": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Vinicius Tomaz"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "abc123"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": 69999326309
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "viniciustomaz@email.com"
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "example": "2001-04-30"
+                    },
+                    "zip_code": {
+                        "type": "string",
+                        "example": "61760000"
+                    }
+                }
+            },
+            "TutorPut": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Guilherme"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": 69981312317
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "guilherme@email.com"
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "example": "1993-12-12"
+                    },
+                    "zip_code": {
+                        "type": "string",
+                        "example": "61760000"
+                    }
+                }
+            },
+            "PetPostAndPut": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Milton"
+                    },
+                    "species": {
+                        "type": "string",
+                        "example": "cat"
+                    },
+                    "carry": {
+                        "type": "string",
+                        "example": "m"
+                    },
+                    "weight": {
+                        "type": "string",
+                        "example": 6
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "example": "1993-12-12"
+                    }
+                }
+            },
+            "AuthPost": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "viniciustomaz@email.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "abc123"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "Success": {
+                "description": "200. Success"
+            },
+            "Created": {
+                "description": "201. Created"
+            },
+            "NoContent": {
+                "description": "204. No Content"
+            },
+            "BadRequestError": {
+                "description": "400. Bad Request Error"
+            },
+            "UnauthorizedError": {
+                "description": "401. Unauthorized Error"
+            },
+            "NotFoundError": {
+                "description": "404. Not Found Error"
+            },
+            "InternalServerError": {
+                "description": "500. Internal Server Error"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
